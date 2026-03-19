@@ -46,11 +46,10 @@ jobs:
 
       - name: Run SonarCloud analysis
         run: |
-          mvn sonar:sonar \
+          mvn sonar:sonar
             -Dsonar.projectKey=moradiii_secure-library \
             -Dsonar.organization=moradiii \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
   dast:
     name: DAST - OWASP ZAP
