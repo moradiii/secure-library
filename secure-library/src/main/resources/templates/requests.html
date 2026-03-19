@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Borrow Requests</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #f4f4f4;
+        }
+        a.button {
+            display: inline-block;
+            padding: 8px 12px;
+            background: #ddd;
+            text-decoration: none;
+            color: black;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Borrow Requests</h1>
+<div style="margin-bottom: 20px;">
+    <form th:action="@{/logout}" method="post" style="display:inline;">
+        <button style="padding:8px 12px; cursor:pointer;">Logout</button>
+    </form>
+</div>
+    <a class="button" th:href="@{/books}">Back to Books</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Book</th>
+                <th>Status</th>
+                <th>Admin Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="req : ${requests}">
+                <td th:text="${req.id}"></td>
+                <td th:text="${req.user.username}"></td>
+                <td th:text="${req.book.title}"></td>
+                <td th:text="${req.status}"></td>
+                <td>
+                    <span th:if="${req.status.name() != 'PENDING'}">No action</span>
+                    <span th:if="${req.status.name() == 'PENDING'}">
+                        <a th:href="@{'/admin/requests/approve/' + ${req.id}}">Approve</a>
+                        |
+                        <a th:href="@{'/admin/requests/reject/' + ${req.id}}">Reject</a>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
